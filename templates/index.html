@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>ComicCraft - AI Comic Generator</title>
+
+<link
+    rel="stylesheet"
+    href="/static/css/style.css"
+>
+```
+
+</head>
+
+<body>
+
+```
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="logo">
+            ✨ ComicCraft AI
+        </div>
+
+        <h1>
+            Turn Your Ideas Into Comics
+        </h1>
+
+        <p>
+            Create amazing AI-powered comic stories
+            from your imagination.
+        </p>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <section class="form-card">
+
+        <div class="card-title">
+            <span>🎨</span>
+
+            <div>
+                <h2>Create Your Comic</h2>
+
+                <p>
+                    Enter your idea and let AI bring it to life.
+                </p>
+            </div>
+        </div>
+
+
+        <label for="storyPrompt">
+            📖 Story Prompt
+        </label>
+
+        <textarea
+            id="storyPrompt"
+            placeholder="Example: A student discovers a magical door inside an ancient library..."
+        ></textarea>
+
+
+        <label for="characterName">
+            🧑 Character Name
+        </label>
+
+        <input
+            type="text"
+            id="characterName"
+            value="Alex"
+            placeholder="Enter character name"
+        >
+
+
+        <label for="setting">
+            🌍 Setting
+        </label>
+
+        <input
+            type="text"
+            id="setting"
+            value="Modern city"
+            placeholder="Example: Magical kingdom"
+        >
+
+
+        <label for="tone">
+            🎭 Tone
+        </label>
+
+        <select id="tone">
+
+            <option>Funny</option>
+            <option>Adventure</option>
+            <option>Action</option>
+            <option>Emotional</option>
+            <option>Fantasy</option>
+
+        </select>
+
+
+        <label for="artStyle">
+            🖌️ Art Style
+        </label>
+
+        <select id="artStyle">
+
+            <option>Comic book</option>
+            <option>Anime</option>
+            <option>Cartoon</option>
+            <option>Digital art</option>
+            <option>Watercolor</option>
+
+        </select>
+
+
+        <button
+            id="generateButton"
+            onclick="generateComic()"
+        >
+            ✨ Generate Comic
+        </button>
+
+
+        <div
+            id="loading"
+            class="loading hidden"
+        >
+            ⏳ Generating your comic...
+        </div>
+
+
+        <div
+            id="errorMessage"
+            class="error"
+        ></div>
+
+    </section>
+
+
+    <section class="features">
+
+        <div class="feature-card">
+            <span>🤖</span>
+            <h3>AI Story</h3>
+            <p>Generate creative comic stories with AI.</p>
+        </div>
+
+        <div class="feature-card">
+            <span>🎨</span>
+            <h3>AI Artwork</h3>
+            <p>Turn your story scenes into comic panels.</p>
+        </div>
+
+        <div class="feature-card">
+            <span>💡</span>
+            <h3>Your Imagination</h3>
+            <p>Create fantasy, adventure, action and more.</p>
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        ComicCraft AI • Create. Imagine. Inspire.
+    </p>
+
+</footer>
+
+
+<script src="/static/script.js"></script>
+```
+
+</body>
+
+</html>

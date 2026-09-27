@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Comic Preview - ComicCraft
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        ComicCraft
+    </h1>
+
+    <p>
+        Comic Preview
+    </p>
+
+</header>
+
+
+<main class="container">
+
+
+    <section
+        id="comicHeader"
+        class="comic-title"
+    >
+
+        <h2 id="comicTitle">
+            Your AI Comic
+        </h2>
+
+        <p id="comicSummary"></p>
+
+    </section>
+
+
+    <section
+        id="comicPanels"
+        class="comic-result"
+    ></section>
+
+
+    <section class="actions">
+
+        <button
+            onclick="exportComic()"
+        >
+            Export Comic
+        </button>
+
+
+        <button
+            onclick="createAnother()"
+        >
+            Create Another Comic
+        </button>
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+const comic =
+    JSON.parse(
+        sessionStorage.getItem(
+            "comic"
+        )
+    );
+
+
+if (!comic) {
+
+    document.getElementById(
+        "comicPanels"
+    ).innerHTML = `
+
+        <div class="hero">
+
+            <h2>
+                No Comic Found
+            </h2>
+
+            <p>
+                Please generate a comic first.
+            </p>
+
+            <button
+                onclick="createAnother()"
+            >
+                Go Back
+            </button>
+
+        </div>
+
+    `;
+
+}
+else {
+
+    displayComic(
+        comic
+    );
+
+}
+
+
+function displayComic(
+    comic
+) {
+
+    document.getElementById(
+        "comicTitle"
+    ).textContent =
+        comic.title;
+
+
+    document.getElementById(
+        "comicSummary"
+    ).textContent =
+        comic.summary;
+
+
+    const container =
+        document.getElementById(
+            "comicPanels"
+        );
+
+
+    comic.panels.forEach(
+        panel => {
+
+            const article =
+                document.createElement(
+                    "article"
+                );
+
+
+            article.className =
+                "panel";
+
+
+            let imageHTML = "";
+
+
+            if (
+                panel.image_url
+            ) {
+
+                imageHTML = `
+
+                    <img
+                        src="${panel.image_url}"
+                        alt="Comic Panel ${panel.panel_number}"
+                    >
+
+                `;
+
+            }
+            else {
+
+                imageHTML = `
+
+                    <div class="image-placeholder">
+
+                        Image unavailable
+
+                    </div>
+
+                `;
+
+            }
+
+
+            article.innerHTML = `
+
+                ${imageHTML}
+
+
+                <div class="panel-content">
+
+                    <h3>
+                        Panel
+                        ${panel.panel_number}
+                    </h3>
+
+
+                    <p>
+                        <strong>
+                            Scene:
+                        </strong>
+
+                        ${escapeHTML(
+                            panel.scene
+                        )}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Narration:
+                        </strong>
+
+                        ${escapeHTML(
+                            panel.narration
+                        )}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Dialogue:
+                        </strong>
+
+                        ${escapeHTML(
+                            panel.dialogue
+                        )}
+                    </p>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                article
+            );
+
+        }
+    );
+
+}
+
+
+async function exportComic() {
+
+    if (!comic) {
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/export-success",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        comic: comic
+                    })
+
+                }
+            );
+
+
+        const html =
+            await response.text();
+
+
+        document.open();
+
+        document.write(
+            html
+        );
+
+        document.close();
+
+    }
+    catch (error) {
+
+        alert(
+            "Export failed: "
+            + error.message
+        );
+
+    }
+
+}
+
+
+function createAnother() {
+
+    sessionStorage.removeItem(
+        "comic"
+    );
+
+
+    window.location.href =
+        "/";
+
+}
+
+
+function escapeHTML(
+    value
+) {
+
+    if (!value) {
+
+        return "";
+
+    }
+
+
+    return value
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
